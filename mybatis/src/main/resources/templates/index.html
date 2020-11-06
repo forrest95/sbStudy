@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <title>Title</title>
+</head>
+
+<body style="'margin:50px;'">
+<br/>
+<div><a href="/student/toAdd" class="btn btn-success">添加用户</a></div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>序号stuStat.count</th>
+        <th>序号stuStat.index</th>
+        <th>序号stu.id</th>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>分数</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="stu:${studentList}">
+        <td th:text="${stuStat.count}"></td>
+        <td th:text="${stuStat.index}"></td>
+        <td th:text="${stu.id}"></td>
+        <td th:text="${stu.name}"></td>
+        <td th:text="${stu.age}"></td>
+        <td th:text="${stu.score}"></td>
+        <td>
+            <a th:href="@{/student/toUpdate(id=${stu.id})}">修改</a>
+            <a th:href="@{/student/delete(id=${stu.id})}">删除</a>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
+</body>
+</html>

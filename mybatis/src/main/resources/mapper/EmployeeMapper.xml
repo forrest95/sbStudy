@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.monkey1024.mybatis.mapper.EmployeeMapper">
+
+    <!--形成递归查询-->
+    <resultMap id="childrenMap" type="com.monkey1024.mybatis.bean.Employee">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="job" property="job" />
+
+        <collection property="children" ofType="Employee" select="selectChildrenByPid" column="id" />
+    </resultMap>
+
+    <!--查询多条数据-->
+    <!--resultType是数据返回放到哪个类型中-->
+    <select id="selectChildrenByPid" resultMap="childrenMap">
+        SELECT id,name,job FROM t_employee WHERE mgr=#{pid}
+    </select>
+
+    <select id="selectEmployeeByPid" resultMap="childrenMap">
+    SELECT id, name ,job
+    FROM t_employee
+    WHERE id=#{id}
+    </select>
+
+    <resultMap id="leaderMap" type="Employee">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <association property="leader" javaType="Employee" select="selectLeaderByPid" column="mgr" />
+    </resultMap>
+    <select id="selectLeaderByPid" resultMap="leaderMap">
+        select id,name,job,mgr from t_employee where id=#{id}
+    </select>
+
+
+</mapper>

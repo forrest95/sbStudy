@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <title>links/index</title>
+</head>
+
+<body style="'margin:50px;'">
+<br/>
+<div><a href="/link/toAdd" class="btn btn-success">添加link</a></div>
+<h4>下面是linksLists循环</h4>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>linksLists.count</th>
+        <th>序号linkStat.index</th>
+        <th>序号link.id</th>
+        <th>name</th>
+        <th>url</th>
+        <th>description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="link:${linksLists}">
+        <td th:text="${linkStat.count}"></td> <!--1 2 3 4 升序 从1开始-->
+        <td th:text="${linkStat.index}"></td> <!--0 1 2 3 升序 从0开始-->
+        <td th:text="${link.id}"></td>        <!--1 2 4 5 列表id-->
+        <td th:text="${link.name}"></td>
+        <td th:text="${link.url}"></td>
+        <td th:text="${link.description}"></td>
+        <td>
+            <a th:href="@{/link/toUpdate(id=${link.id})}">修改</a>
+            <a th:href="@{/link/delete(id=${link.id})}">删除</a>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
+<hr/>
+<h4>下面是map循环</h4>
+<pre>
+    //发送map到前端
+       <!-- HashMap<String, Links> linksMap = new HashMap<>();
+        for (int i = 0; i < 10; i++) {
+            Links link = new Links();
+            link.setId(i);
+            link.setName("jack" + i);
+            link.setDescription("13"+i+"11111111");
+            linksMap.put(String.valueOf(i), link);
+        }
+
+        model.addAttribute("linksMap", linksMap);-->
+</pre>
+<br/>
+<div th:each="myMapVal : ${linksMap}">
+    <span th:text="${myMapValStat.count}"></span>
+    <span th:text="${myMapVal.key}"></span>
+    <span th:text="${myMapVal.value.name}"></span>
+    <span th:text="${myMapVal.value.description}"></span>
+    <br/>
+</div>
+
+<hr>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>linksMap.count</th>
+        <!--<th>序号linkStat.index</th>-->
+        <th>序号myMap.key</th>
+        <th>name</th>
+        <th>description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="myMapVal:${linksMap}">
+        <td th:text="${myMapValStat.count}"></td> <!--1 2 3 4 升序 从1开始-->
+        <!--<td th:text="${myMapValStat.index}"></td> &lt;!&ndash;0 1 2 3 升序 从0开始&ndash;&gt;-->
+        <td th:text="${myMapVal.key}"></td>
+        <td th:text="${myMapVal.value.name}"></td>
+        <td th:text="${myMapVal.value.description}"></td>
+    </tr>
+
+    </tbody>
+</table>
+
+
+
+</body>
+
+</html>

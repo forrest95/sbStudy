@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.monkey1024.mybatis.mapper.LanmuMapper">
+
+    <resultMap id="LanmuMap" type="com.monkey1024.mybatis.bean.Lanmu">
+        <!--Lanmu 中的基本属性-->
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+
+        <!--关联属性的映射关系-->
+        <collection property="wenzhangList" ofType="com.monkey1024.mybatis.bean.Wenzhang" column="lanmu_id">
+            <id column="wenzhang_id" property="id"/>
+            <result column="title" property="title"/>
+            <result column="content" property="content"/>
+            <result column="lanmu_id" property="lanmu_id"/>
+        </collection>
+    </resultMap>
+
+    <!--查询多条数据-->
+    <!--resultType是数据返回放到哪个类型中-->
+    <select id="onetoall" resultMap="LanmuMap">
+        select lanmu.id,lanmu.name ,wenzhang.id as wenzhang_id,wenzhang.title,wenzhang.content,wenzhang.lanmu_id from lanmu left join wenzhang on lanmu.id=wenzhang.lanmu_id where lanmu.id=#{lanmu_id}
+    </select>
+
+    <select id="selectLanmuById" resultType="com.monkey1024.mybatis.bean.Lanmu">
+        SELECT id,name FROM lanmu WHERE id=#{id}
+    </select>
+
+
+    <!--修改-->
+   <!-- <update id="updateStudent">
+        UPDATE t_student SET name=#{name},age=#{age},score=#{score} WHERE id=#{id}
+    </update>
+
+    &lt;!&ndash;删除&ndash;&gt;
+    <delete id="deleteStudent">
+        DELETE FROM t_student Where id=#{id}
+    </delete>
+
+    &lt;!&ndash;新增&ndash;&gt;
+    <insert id="addStudent">
+        INSERT INTO t_student(name,age,score) VALUES (#{name},#{age},#{score})
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT @@identity
+        </selectKey>
+    </insert>-->
+
+</mapper>
